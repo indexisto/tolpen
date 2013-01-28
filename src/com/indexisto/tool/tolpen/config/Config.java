@@ -11,11 +11,11 @@ import com.indexisto.tool.tolpen.prepare.request.Request;
 
 public class Config {
 
-	public final static Path basePath = Paths.get("/home/ir/tolpen");
+	public final static Path basePath = Paths.get("~/tolpen");
 
     public static class DocumentStorage {
 
-       public static final Path source  = basePath.resolve("enwiki-20130102-pages-articles.xml");
+        public static final Path source  = basePath.resolve("enwiki-20130102-pages-articles.xml");
         public static final Path storage = basePath.resolve("docStorage");
         public static final long limit   = 1000000L;
         public static final String extension = ".doc";
