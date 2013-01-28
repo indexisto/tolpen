@@ -1,6 +1,10 @@
 *.class
+*.log
 
 target/
+bin/
+src/resources/data
+jmeter/
 
 .*
 
