@@ -11,7 +11,7 @@ import com.indexisto.tool.tolpen.prepare.request.Request;
 
 public class Config {
 
-	public final static Path basePath = Paths.get("src/resource/data");
+	public final static Path basePath = Paths.get("src/resources/data");
 
     public static class DocumentStorage {
 

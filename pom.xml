@@ -99,12 +99,6 @@
  <build>
   <sourceDirectory>src/java</sourceDirectory>
 
-  <resources>
-   <resource>
-    <directory>src/resources</directory>
-   </resource>
-  </resources>
-    
   <plugins>
    <plugin>
     <artifactId>maven-compiler-plugin</artifactId>
