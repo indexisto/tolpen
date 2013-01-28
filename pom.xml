@@ -17,6 +17,10 @@
   </repository>
  </repositories>
 
+ <properties>
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+ </properties>
+  
  <dependencies>
   <dependency>
    <groupId>org.elasticsearch</groupId>
@@ -113,6 +117,25 @@
    
    <plugin>
     <groupId>org.codehaus.mojo</groupId>
+    <artifactId>chronos-jmeter-maven-plugin</artifactId>
+     <version>1.1.0</version>
+     <configuration>
+      <input>${basedir}/src/resources/testPlan.jmx</input>
+      <dataid>Test Plan</dataid>
+     </configuration>
+     <executions>
+      <execution>
+       <goals>
+        <goal>jmeter</goal>
+        <goal>check</goal>
+        <goal>savehistory</goal>
+       </goals>
+      </execution>
+     </executions>
+    </plugin>
+    
+   <plugin>
+    <groupId>org.codehaus.mojo</groupId>
     <artifactId>exec-maven-plugin</artifactId>
     <version>1.2.1</version>
     <executions>
@@ -128,4 +151,43 @@
    </plugin>
   </plugins>
  </build>
+ <reporting>
+  <plugins>
+   <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>chronos-report-maven-plugin</artifactId>
+    <version>1.1.0</version>
+    <configuration>
+     <description>Benchmark results</description>
+     <title>JMeter Report</title>
+     <showaverage>true</showaverage>
+     <showpercentile>true</showpercentile>
+     <showinfotable>true</showinfotable>
+     <showtimeinfo>true</showtimeinfo>
+     <showsummary>true</showsummary>
+     <showdetails>true</showdetails>
+     <showresponse>true</showresponse>
+     <showhistogram>true</showhistogram>
+     <showthroughput>true</showthroughput>
+     <showgc>true</showgc>
+    </configuration>
+    <reportSets>
+     <reportSet>
+      <configuration>
+       <dataid>apiloadtest</dataid>
+       <reportid>jmeter-benchmark-report</reportid>
+       <title>JMeter Bechmark Report</title>
+       <description>
+        <![CDATA[Bechmark Report]]>
+       </description>
+      </configuration>
+      <reports>
+       <report>report</report>
+       <report>historyreport</report>
+      </reports>
+     </reportSet>
+    </reportSets>
+   </plugin>
+  </plugins>
+ </reporting>
 </project>
