@@ -21,12 +21,6 @@ public class UpdateRequest extends SelectableBase implements Request {
 
 
     @Override
-    public String getName() {
-        return "update";
-    }
-
-
-    @Override
     public String write(PrepareContext context) throws IOException {
         throw new NotImplementedException();
 //      try (StorageOutput output = context.getNextRequestOutput()) {
@@ -42,7 +36,6 @@ public class UpdateRequest extends SelectableBase implements Request {
     @Override
     public String toString() {
         return toStringHelper(this)
-            .add("requestName", getName())
             .toString();
     }
 }

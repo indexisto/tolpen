@@ -1,12 +1,11 @@
-package com.indexisto.tool.tolpen.prune;
+package com.indexisto.tool.tolpen.prune.wiki;
 
 import org.elasticsearch.river.wikipedia.support.WikiXMLSAXParser;
 
 import com.indexisto.tool.tolpen.config.Config.DocumentStorage;
-import com.indexisto.tool.tolpen.prune.wiki.WikiPageCallbackHandler;
 import com.indexisto.tool.tolpen.storage.fs.FSStorage;
 
-public class Pruner {
+public class WikiPruner {
 
     public void execute() throws Exception {
         final WikiPageCallbackHandler handler =

@@ -32,10 +32,7 @@ public class Preparator {
 
 
     private void writeRequest(Request request) throws IOException {
-        Util.appendLineTo(
-            context.getRequestsMetaPath(),
-            request.write(context)
-        );
+        Util.appendLineTo(context.getRequestsMetaPath(), request.write(context));
     }
 
 
@@ -51,7 +48,7 @@ public class Preparator {
 
     private void writeProperties() throws IOException {
         final Path propertyPath = context.getPropertiesPath();
-        Util.writeLineTo (propertyPath, "througput");
+        Util.writeLineTo (propertyPath, "throughput");
         Util.appendLineTo(propertyPath, Long.toString(context.getIndexType().getThrougput()));
     }
 }

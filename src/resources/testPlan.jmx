@@ -9,7 +9,7 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="indecies" elementType="Argument">
             <stringProp name="Argument.name">indecies</stringProp>
-            <stringProp name="Argument.value">indecies</stringProp>
+            <stringProp name="Argument.value">data/indecies</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="clusterHost" elementType="Argument">
@@ -54,6 +54,9 @@
             <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
             <assertionsResultsToSave>0</assertionsResultsToSave>
             <bytes>true</bytes>
+            <threadCounts>true</threadCounts>
+            <sampleCount>true</sampleCount>
+            <idleTime>true</idleTime>
           </value>
         </objProp>
         <stringProp name="filename"></stringProp>
@@ -98,7 +101,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">10</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1358945407000</longProp>
         <longProp name="ThreadGroup.end_time">1358945407000</longProp>
@@ -161,7 +164,7 @@
               <stringProp name="variableNames"></stringProp>
             </CSVDataSet>
             <hashTree/>
-            <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Delay" enabled="false">
+            <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Delay" enabled="true">
               <stringProp name="calcMode">this thread only</stringProp>
               <stringProp name="throughput">${throughput}</stringProp>
             </ConstantThroughputTimer>
@@ -228,6 +231,46 @@ Content-Type: application/x-www-form-urlencoded&#xd;
           </hashTree>
         </hashTree>
       </hashTree>
+      <kg.apc.jmeter.vizualizers.CompositeResultCollector guiclass="kg.apc.jmeter.vizualizers.CompositeGraphGui" testclass="kg.apc.jmeter.vizualizers.CompositeResultCollector" testname="jp@gc - Composite Graph" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>true</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+        <longProp name="interval_grouping">500</longProp>
+        <boolProp name="graph_aggregated">false</boolProp>
+        <stringProp name="include_sample_labels"></stringProp>
+        <stringProp name="exclude_sample_labels"></stringProp>
+        <collectionProp name="COMPOSITE_CFG">
+          <collectionProp name=""/>
+          <collectionProp name=""/>
+        </collectionProp>
+      </kg.apc.jmeter.vizualizers.CompositeResultCollector>
+      <hashTree/>
     </hashTree>
   </hashTree>
 </jmeterTestPlan>

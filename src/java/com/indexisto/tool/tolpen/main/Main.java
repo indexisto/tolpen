@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.indexisto.tool.tolpen.prepare.Preparator;
-import com.indexisto.tool.tolpen.prune.Pruner;
-import com.indexisto.tool.tolpen.prune.wiki.exception.StorageLimitException;
+import com.indexisto.tool.tolpen.prune.exception.StorageLimitException;
+import com.indexisto.tool.tolpen.prune.wiki.WikiPruner;
 
 public class Main {
 
@@ -18,7 +18,7 @@ public class Main {
         try {
             switch(args[0]) {
             case "prune":
-                new Pruner().execute();
+                new WikiPruner().execute();
                 break;
 
             case "prepare":

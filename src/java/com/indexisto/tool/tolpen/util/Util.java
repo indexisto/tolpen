@@ -32,6 +32,14 @@ public class Util {
     }
 
 
+    public static Range<Integer> nextRange(int count, int upper) {
+        checkArgument(upper > count);
+
+        final int lower = Util.nextInt(upper - count + 1);
+        return Range.closedOpen(lower, lower + count);
+    }
+
+
     public static Range<Long> nextRange(long count, long upper) {
         checkArgument(upper > count);
 
@@ -46,6 +54,6 @@ public class Util {
 
 
     public static void appendLineTo(Path path, String... args) throws IOException {
-        FileUtils.write(path.toFile(), "\n" + StringUtils.join(args, ","), true);
+        FileUtils.write(path.toFile(), HTTP_NEW_LINE + StringUtils.join(args, ","), true);
     }
 }

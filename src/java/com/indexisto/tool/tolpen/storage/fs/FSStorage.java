@@ -1,8 +1,11 @@
 package com.indexisto.tool.tolpen.storage.fs;
 
+import java.io.InputStream;
+
 import com.google.common.collect.Range;
 import com.indexisto.tool.tolpen.config.Config.DocumentStorage;
 import com.indexisto.tool.tolpen.config.Config.RequestStorage;
+import com.indexisto.tool.tolpen.prune.search.SearchType;
 import com.indexisto.tool.tolpen.storage.StorageInput;
 import com.indexisto.tool.tolpen.storage.StorageOutput;
 import com.indexisto.tool.tolpen.util.Util;
@@ -36,5 +39,10 @@ public class FSStorage {
 
     public static Iterable<StorageOutput> newRequestOutput() {
         return new OutputGenerator(RequestStorage.storage, RequestStorage.limit, RequestStorage.extension);
+    }
+
+
+    public static Iterable<InputStream> newTaskInput(SearchType type, int count) {
+        return TaskSource.instance.getTasks(type, count);
     }
 }

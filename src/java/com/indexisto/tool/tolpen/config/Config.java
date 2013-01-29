@@ -1,13 +1,19 @@
 package com.indexisto.tool.tolpen.config;
 
+import static com.indexisto.tool.tolpen.prune.search.SearchType.Prefix3;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import com.indexisto.tool.tolpen.prepare.index.IndexType;
 import com.indexisto.tool.tolpen.prepare.request.Request;
+import com.indexisto.tool.tolpen.prepare.request.SearchRequest;
+import com.indexisto.tool.tolpen.prune.search.SearchType;
+import com.indexisto.tool.tolpen.util.selectable.SelectableProvider;
 
 public class Config {
 
@@ -24,10 +30,14 @@ public class Config {
 
     public static class RequestStorage {
 
-        //public static final Path source  = basePath.resolve("enwiki-20130102-pages-articles.xml");
         public static final Path storage = basePath.resolve("reqStorage");
         public static final long limit   = 1000000L;
         public static final String extension = ".rec";
+    }
+
+
+    public static class TaskStorage {
+        public static final Path source = basePath.resolve("highlight.tasks");
     }
 
 
@@ -39,8 +49,21 @@ public class Config {
         public static final String type = "doc";
         public static final Path storage = basePath.resolve("indecies");
 
+        private final static Collection<SelectableProvider<SearchType>> searchTypes = new ArrayList<>();
+        static {
+//            searchTypes.add(new SelectableProvider<>(10, HighSpanNear));
+//            searchTypes.add(new SelectableProvider<>( 5, MedSpanNear));
+//            searchTypes.add(new SelectableProvider<>( 1, LowSpanNear));
+//            searchTypes.add(new SelectableProvider<>(10, HighPhrase));
+//            searchTypes.add(new SelectableProvider<>( 5, MedPhrase));
+//            searchTypes.add(new SelectableProvider<>( 1, LowPhrase));
+//            searchTypes.add(new SelectableProvider<>(10, HighSloppyPhrase));
+//            searchTypes.add(new SelectableProvider<>( 5, MedSloppyPhrase));
+//            searchTypes.add(new SelectableProvider<>( 1, LowSloppyPhrase));
+            searchTypes.add(new SelectableProvider<>(10, Prefix3));
+        }
         private final static Collection<Request> queries = Arrays.asList(new Request[] {
-            //new SearchRequest(9L, Long.MAX_VALUE),
+            new SearchRequest(9L, Long.MAX_VALUE, searchTypes),
             //new UpdateRequest(9L, Long.MAX_VALUE)
         });
         private final static List<IndexType> indexTypes = Arrays.asList(new IndexType[] {

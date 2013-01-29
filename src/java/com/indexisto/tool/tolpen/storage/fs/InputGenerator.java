@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.util.Iterator;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.AbstractIterator;
 import com.google.common.collect.Range;
 import com.indexisto.tool.tolpen.storage.StorageInput;

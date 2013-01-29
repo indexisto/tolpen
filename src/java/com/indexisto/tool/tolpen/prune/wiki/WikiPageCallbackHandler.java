@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.CharMatcher;
+import com.indexisto.tool.tolpen.prune.exception.StorageLimitException;
 import com.indexisto.tool.tolpen.storage.StorageOutput;
 import com.indexisto.tool.tolpen.util.Util;
 
@@ -37,7 +38,7 @@ public class WikiPageCallbackHandler implements PageCallbackHandler {
                     write(page, outputIterator.next().getStream());
                 }
                 else {
-                    throw new RuntimeException("storage limit");
+                    throw new StorageLimitException("storage limit");
                 }
             }
         }
