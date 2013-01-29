@@ -126,10 +126,10 @@
             <stringProp name="66952">CPU</stringProp>
             <stringProp name="0"></stringProp>
           </collectionProp>
-          <collectionProp name="1087927907">
+          <collectionProp name="1499632977">
             <stringProp name="-1040172157">node01</stringProp>
             <stringProp name="1600768">4444</stringProp>
-            <stringProp name="2112896831">Disks I/O</stringProp>
+            <stringProp name="66952">CPU</stringProp>
             <stringProp name="0"></stringProp>
           </collectionProp>
         </collectionProp>
@@ -318,7 +318,7 @@
               <stringProp name="variableNames"></stringProp>
             </CSVDataSet>
             <hashTree/>
-            <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Delay" enabled="false">
+            <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Delay" enabled="true">
               <stringProp name="calcMode">this thread only</stringProp>
               <stringProp name="throughput">${throughput}</stringProp>
             </ConstantThroughputTimer>
@@ -385,6 +385,38 @@ Content-Type: application/x-www-form-urlencoded&#xd;
           </hashTree>
         </hashTree>
       </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>true</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
     </hashTree>
   </hashTree>
 </jmeterTestPlan>
