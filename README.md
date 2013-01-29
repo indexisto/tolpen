@@ -23,4 +23,4 @@ Step2: prepare indecies and requests repos
 mvn clean package exec:java -Dexec.args="prepare"
 
 Step3: launch jmeter
-...
+mvn chronos-jmeter:jmeter

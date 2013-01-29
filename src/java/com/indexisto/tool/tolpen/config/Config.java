@@ -21,8 +21,8 @@ public class Config {
 
     public static class DocumentStorage {
 
-        public static final Path source  = basePath.resolve("enwiki-20130102-pages-articles.xml");
-        public static final Path storage = basePath.resolve("docStorage");
+        public static final Path source  = basePath.resolve("enwiki-20130102-pages-articles.xml").normalize();
+        public static final Path storage = basePath.resolve("docStorage").normalize();
         public static final long limit   = 1000000L;
         public static final String extension = ".doc";
     }
@@ -30,14 +30,14 @@ public class Config {
 
     public static class RequestStorage {
 
-        public static final Path storage = basePath.resolve("reqStorage");
+        public static final Path storage = basePath.resolve("reqStorage").normalize();
         public static final long limit   = 1000000L;
         public static final String extension = ".rec";
     }
 
 
     public static class TaskStorage {
-        public static final Path source = basePath.resolve("../highlight.tasks");
+        public static final Path source = basePath.resolve("../highlight.tasks").normalize();
     }
 
 
