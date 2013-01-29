@@ -1,104 +1,96 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
- 
  <modelVersion>4.0.0</modelVersion>
  
  <groupId>com.indexisto.tool.tolpen</groupId>
  <artifactId>tolpen</artifactId>
  <version>0.0.1-SNAPSHOT</version>
  <name>Tolpen</name>
+ 
  <description>ES Cluster Stress Testing Tool</description>
-
+ 
  <repositories>
   <repository>
-    <id>sonatype</id>
-    <name>Sonatype Groups</name>
-    <url>https://oss.sonatype.org/content/groups/public/</url>
+   <id>sonatype</id>
+   <name>Sonatype Groups</name>
+   <url>https://oss.sonatype.org/content/groups/public/</url>
   </repository>
  </repositories>
-
+ 
  <properties>
   <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
  </properties>
-  
+ 
  <dependencies>
   <dependency>
    <groupId>org.elasticsearch</groupId>
    <artifactId>elasticsearch-river-wikipedia</artifactId>
    <version>1.1.0</version>
   </dependency>
-  
+ 
   <dependency>
-    <groupId>io.searchbox</groupId>
-    <artifactId>jest</artifactId>
-    <version>0.0.2</version>
+   <groupId>io.searchbox</groupId>
+   <artifactId>jest</artifactId>
+   <version>0.0.2</version>
   </dependency>
-  
+ 
   <dependency>
-	<groupId>com.google.guava</groupId>
-	<artifactId>guava</artifactId>
-	<version>14.0-rc1</version>
+   <groupId>com.google.guava</groupId>
+   <artifactId>guava</artifactId>
+   <version>14.0-rc1</version>
   </dependency>
-
+ 
   <dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-math3</artifactId>
-    <version>3.1.1</version>
+   <groupId>org.apache.commons</groupId>
+   <artifactId>commons-math3</artifactId>
+   <version>3.1.1</version>
   </dependency>
-    
+ 
   <dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-lang3</artifactId>
-    <version>3.1</version>
+   <groupId>org.apache.commons</groupId>
+   <artifactId>commons-lang3</artifactId>
+   <version>3.1</version>
   </dependency>
-  
+ 
   <dependency>
-    <groupId>commons-io</groupId>
-    <artifactId>commons-io</artifactId>
-    <version>2.4</version>
+   <groupId>commons-io</groupId>
+   <artifactId>commons-io</artifactId>
+   <version>2.4</version>
   </dependency>
-
-<!--  
+ 
   <dependency>
-    <groupId>org.apache.jmeter</groupId>
-    <artifactId>ApacheJMeter_java</artifactId>
-    <version>2.8</version>
+   <groupId>com.google.code.gson</groupId>
+   <artifactId>gson</artifactId>
+   <version>2.2.2</version>
   </dependency>
--->            
+ 
   <dependency>
-    <groupId>com.google.code.gson</groupId>
-    <artifactId>gson</artifactId>
-    <version>2.2.2</version>
+   <groupId>joda-time</groupId>
+   <artifactId>joda-time</artifactId>
+   <version>2.1</version>
   </dependency>
-            
+ 
   <dependency>
-    <groupId>joda-time</groupId>
-    <artifactId>joda-time</artifactId>
-    <version>2.1</version>
-   </dependency>
-    
-  <dependency>
-	<groupId>org.apache.lucene</groupId>
-	<artifactId>lucene-benchmark</artifactId>
-	<version>4.0.0</version>
+   <groupId>org.apache.lucene</groupId>
+   <artifactId>lucene-benchmark</artifactId>
+   <version>4.0.0</version>
   </dependency>
-            
+ 
   <dependency>
    <groupId>org.slf4j</groupId>
    <artifactId>slf4j-api</artifactId>
    <version>1.7.2</version>
   </dependency>
-  
+ 
   <dependency>
    <groupId>org.slf4j</groupId>
    <artifactId>slf4j-simple</artifactId>
    <version>1.7.2</version>
   </dependency>
  </dependencies>
-
+ 
  <build>
   <sourceDirectory>src/java</sourceDirectory>
-
   <plugins>
    <plugin>
     <artifactId>maven-compiler-plugin</artifactId>
@@ -108,26 +100,25 @@
      <target>1.7</target>
     </configuration>
    </plugin>
-   
    <plugin>
     <groupId>org.codehaus.mojo</groupId>
     <artifactId>chronos-jmeter-maven-plugin</artifactId>
-     <version>1.1.0</version>
-     <configuration>
-      <input>${basedir}/src/resources/testPlan.jmx</input>
-      <dataid>Test Plan</dataid>
-     </configuration>
-     <executions>
-      <execution>
-       <goals>
-        <goal>jmeter</goal>
-        <goal>check</goal>
-        <goal>savehistory</goal>
-       </goals>
-      </execution>
-     </executions>
-    </plugin>
-    
+    <version>1.1.0</version>
+    <configuration>
+     <input>${basedir}/src/resources/testPlan.jmx</input>
+     <dataid>Test Plan</dataid>
+    </configuration>
+    <executions>
+     <execution>
+      <goals>
+       <goal>jmeter</goal>
+       <goal>check</goal>
+       <goal>savehistory</goal>
+      </goals>
+     </execution>
+    </executions>
+   </plugin>
+   
    <plugin>
     <groupId>org.codehaus.mojo</groupId>
     <artifactId>exec-maven-plugin</artifactId>
@@ -145,6 +136,7 @@
    </plugin>
   </plugins>
  </build>
+ 
  <reporting>
   <plugins>
    <plugin>
