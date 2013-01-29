@@ -37,7 +37,7 @@ public class Config {
 
 
     public static class TaskStorage {
-        public static final Path source = basePath.resolve("../highlight.tasks");
+        public static final Path source = basePath.resolve("highlight.tasks");
     }
 
 
@@ -51,7 +51,7 @@ public class Config {
 
         private final static Collection<SelectableProvider<SearchType>> searchTypes = new ArrayList<>();
         static {
-///            searchTypes.add(new SelectableProvider<>(10, HighSpanNear));
+//            searchTypes.add(new SelectableProvider<>(10, HighSpanNear));
 //            searchTypes.add(new SelectableProvider<>( 5, MedSpanNear));
 //            searchTypes.add(new SelectableProvider<>( 1, LowSpanNear));
 //            searchTypes.add(new SelectableProvider<>(10, HighPhrase));
