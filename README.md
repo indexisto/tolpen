@@ -8,6 +8,7 @@ Install
 sudo apt-get install maven git
 git clone git://github.com/indexisto/tolpen.git
 cd tolpen
+ln -s ~/apache-jmeter-2.8/ jmeter
 
 
 Configure
