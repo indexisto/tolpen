@@ -37,7 +37,7 @@ public class Config {
 
 
     public static class TaskStorage {
-        public static final Path source = basePath.resolve("highlight.tasks");
+        public static final Path source = basePath.resolve("../highlight.tasks");
     }
 
 
