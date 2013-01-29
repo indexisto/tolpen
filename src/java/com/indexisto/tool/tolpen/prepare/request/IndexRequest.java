@@ -3,7 +3,6 @@ package com.indexisto.tool.tolpen.prepare.request;
 import static com.google.common.base.Objects.toStringHelper;
 
 import java.io.IOException;
-import java.net.URL;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -35,21 +34,14 @@ public class IndexRequest extends SelectableBase implements Request {
 
 
     @Override
-    public String getName() {
-        return "index";
-    }
-
-
-    @Override
     public String write(PrepareContext context) throws IOException {
         try (StorageOutput output = context.getNextRequestOutput()) {
-            final String urlPath =
-                    "/" + context.getIndexName() + "/" + Prepare.type + "/_bulk";
-            final URL url =
-                new URL("http", Prepare.host, Prepare.port, urlPath)
-                ;
-            Util.writeRequest("index", url, output, FSStorage.newDocumentInput(docCount));
-            return StringUtils.join(new Object[] {getName(), output.getPath(), urlPath}, ",");
+            Util.writeBulkRequest("index", output, FSStorage.newDocumentInput(docCount));
+            return StringUtils.join(new Object[] {
+                "index",
+                output.getPath().toAbsolutePath(),
+                "/" + context.getIndexName() + "/" + Prepare.type + "/_bulk"
+            }, ",");
         }
     }
 
@@ -57,7 +49,6 @@ public class IndexRequest extends SelectableBase implements Request {
     @Override
     public String toString() {
         return toStringHelper(this)
-            .add("requestName", getName())
             .toString();
     }
 }

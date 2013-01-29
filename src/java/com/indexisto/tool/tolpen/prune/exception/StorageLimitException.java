@@ -1,4 +1,4 @@
-package com.indexisto.tool.tolpen.prune.wiki.exception;
+package com.indexisto.tool.tolpen.prune.exception;
 
 public class StorageLimitException extends RuntimeException {
 
