@@ -6,24 +6,31 @@ import java.io.InputStream;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
+
 public class SearchTask {
 
     private final SearchType type;
     private final String query;
-    private final int span;
+    private final int slop;
     private final boolean isHighlight;
 
 
-    public static SearchTask parse(String line) {
+    public static Iterable<SearchTask> parse(String line) {
         checkNotNull(line);
-        return SearchType.valueOf(StringUtils.substringBefore(line, ":")).parse(line);
+
+        final Iterable<SearchType> types = SearchTaskMapper.map(
+            SearchType.valueOf(StringUtils.substringBefore(line, ":"))
+        );
+        return Iterables.transform(types, new Parser(line));
     }
 
 
     SearchTask(SearchType type, String query) {
         this.type = checkNotNull(type);
         this.query = checkNotNull(query);
-        span = 0;
+        slop = 0;
         isHighlight = true;
     }
 
@@ -31,15 +38,15 @@ public class SearchTask {
     SearchTask(SearchType type, String query, int span) {
         this.type = checkNotNull(type);
         this.query = checkNotNull(query);
-        this.span = span;
+        slop = span;
         isHighlight = true;
     }
 
 
-    SearchTask(SearchType type, String query, int span, boolean isHighlight) {
+    SearchTask(SearchType type, String query, int slop, boolean isHighlight) {
         this.type = checkNotNull(type);
         this.query = checkNotNull(query);
-        this.span = span;
+        this.slop = slop;
         this.isHighlight = isHighlight;
     }
 
@@ -54,8 +61,8 @@ public class SearchTask {
     }
 
 
-    public int getSpan() {
-        return span;
+    public int getSlop() {
+        return slop;
     }
 
 
@@ -65,6 +72,20 @@ public class SearchTask {
 
 
     public InputStream newInputStream() {
-        return type.newInputStream(this);
+        return type.synt(this);
+    }
+
+
+    private static final class Parser implements Function<SearchType, SearchTask> {
+        private final String line;
+
+        public Parser(String line) {
+            this.line = line;
+        }
+
+        @Override
+        public SearchTask apply(SearchType input) {
+            return input.parse(line);
+        }
     }
 }
