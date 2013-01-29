@@ -1,5 +1,14 @@
 package com.indexisto.tool.tolpen.config;
 
+import static com.indexisto.tool.tolpen.prune.search.SearchType.HighPhrase;
+import static com.indexisto.tool.tolpen.prune.search.SearchType.HighPhrasePrefix;
+import static com.indexisto.tool.tolpen.prune.search.SearchType.HighSloppyPhrase;
+import static com.indexisto.tool.tolpen.prune.search.SearchType.LowPhrase;
+import static com.indexisto.tool.tolpen.prune.search.SearchType.LowPhrasePrefix;
+import static com.indexisto.tool.tolpen.prune.search.SearchType.LowSloppyPhrase;
+import static com.indexisto.tool.tolpen.prune.search.SearchType.MedPhrase;
+import static com.indexisto.tool.tolpen.prune.search.SearchType.MedPhrasePrefix;
+import static com.indexisto.tool.tolpen.prune.search.SearchType.MedSloppyPhrase;
 import static com.indexisto.tool.tolpen.prune.search.SearchType.Prefix3;
 
 import java.nio.file.Path;
@@ -21,8 +30,8 @@ public class Config {
 
     public static class DocumentStorage {
 
-        public static final Path source  = basePath.resolve("enwiki-20130102-pages-articles.xml");
-        public static final Path storage = basePath.resolve("docStorage");
+        public static final Path source  = basePath.resolve("enwiki-20130102-pages-articles.xml").normalize();
+        public static final Path storage = basePath.resolve("docStorage").normalize();
         public static final long limit   = 1000000L;
         public static final String extension = ".doc";
     }
@@ -30,14 +39,14 @@ public class Config {
 
     public static class RequestStorage {
 
-        public static final Path storage = basePath.resolve("reqStorage");
+        public static final Path storage = basePath.resolve("reqStorage").normalize();
         public static final long limit   = 1000000L;
         public static final String extension = ".rec";
     }
 
 
     public static class TaskStorage {
-        public static final Path source = basePath.resolve("../highlight.tasks");
+        public static final Path source = basePath.resolve("../highlight.tasks").normalize();
     }
 
 
@@ -54,12 +63,15 @@ public class Config {
 //            searchTypes.add(new SelectableProvider<>(10, HighSpanNear));
 //            searchTypes.add(new SelectableProvider<>( 5, MedSpanNear));
 //            searchTypes.add(new SelectableProvider<>( 1, LowSpanNear));
-//            searchTypes.add(new SelectableProvider<>(10, HighPhrase));
-//            searchTypes.add(new SelectableProvider<>( 5, MedPhrase));
-//            searchTypes.add(new SelectableProvider<>( 1, LowPhrase));
-//            searchTypes.add(new SelectableProvider<>(10, HighSloppyPhrase));
-//            searchTypes.add(new SelectableProvider<>( 5, MedSloppyPhrase));
-//            searchTypes.add(new SelectableProvider<>( 1, LowSloppyPhrase));
+            searchTypes.add(new SelectableProvider<>(10, HighPhrase));
+            searchTypes.add(new SelectableProvider<>( 5, MedPhrase));
+            searchTypes.add(new SelectableProvider<>( 1, LowPhrase));
+            searchTypes.add(new SelectableProvider<>(10, HighPhrasePrefix));
+            searchTypes.add(new SelectableProvider<>( 5, MedPhrasePrefix));
+            searchTypes.add(new SelectableProvider<>( 1, LowPhrasePrefix));
+            searchTypes.add(new SelectableProvider<>(10, HighSloppyPhrase));
+            searchTypes.add(new SelectableProvider<>( 5, MedSloppyPhrase));
+            searchTypes.add(new SelectableProvider<>( 1, LowSloppyPhrase));
             searchTypes.add(new SelectableProvider<>(10, Prefix3));
         }
         private final static Collection<Request> queries = Arrays.asList(new Request[] {

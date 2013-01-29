@@ -9,120 +9,66 @@ import org.apache.commons.io.IOUtils;
 
 public enum SearchType {
   //Respell,
-    LowSpanNear {
-        @Override
-        public SearchTask parse(String line) {
-            return parseSpanNear(this, line);
-        }
+//    LowSpanNear {
+//        @Override public SearchTask parse(String line) { return parseSpanNear(this, line); }
+//        @Override public InputStream synt(SearchTask task) { return newSpanNearStream(task); }
+//    },
+//    MedSpanNear {
+//        @Override public SearchTask parse(String line) { return parseSpanNear(this, line); }
+//        @Override public InputStream synt(SearchTask task) { return newSpanNearStream(task); }
+//    },
+//    HighSpanNear {
+//        @Override public SearchTask parse(String line) { return parseSpanNear(this, line); }
+//        @Override public InputStream synt(SearchTask task) { return newSpanNearStream(task); }
+//    },
 
-        @Override
-        public InputStream newInputStream(SearchTask task) {
-            return newSpanNearStream(task);
-        }
-    },
-    MedSpanNear {
-        @Override
-        public SearchTask parse(String line) {
-            return parseSpanNear(this, line);
-        }
-
-        @Override
-        public InputStream newInputStream(SearchTask task) {
-            return newSpanNearStream(task);
-        }
-    },
-    HighSpanNear {
-        @Override
-        public SearchTask parse(String line) {
-            return parseSpanNear(this, line);
-        }
-
-        @Override
-        public InputStream newInputStream(SearchTask task) {
-            return newSpanNearStream(task);
-        }
-    },
     LowPhrase {
-        @Override
-        public SearchTask parse(String line) {
-            return parsePhrase(this, line);
-        }
-
-        @Override
-        public InputStream newInputStream(SearchTask task) {
-            return newPhraseStream(task);
-        }
+        @Override public SearchTask parse(String line) { return parsePhrase(this, line); }
+        @Override public InputStream synt(SearchTask task) { return newPhraseStream(task); }
     },
     MedPhrase {
-        @Override
-        public SearchTask parse(String line) {
-            return parsePhrase(this, line);
-        }
-
-        @Override
-        public InputStream newInputStream(SearchTask task) {
-            return newPhraseStream(task);
-        }
+        @Override public SearchTask parse(String line) { return parsePhrase(this, line); }
+        @Override public InputStream synt(SearchTask task) { return newPhraseStream(task); }
     },
     HighPhrase {
-        @Override
-        public SearchTask parse(String line) {
-            return parsePhrase(this, line);
-        }
-
-        @Override
-        public InputStream newInputStream(SearchTask task) {
-            return newPhraseStream(task);
-        }
+        @Override public SearchTask parse(String line) { return parsePhrase(this, line); }
+        @Override public InputStream synt(SearchTask task) { return newPhraseStream(task); }
     },
-    LowSloppyPhrase {
-        @Override
-        public SearchTask parse(String line) {
-            return parseSloppyPhrase(this, line);
-        }
 
-        @Override
-        public InputStream newInputStream(SearchTask task) {
-            return newSloppyPhraseStream(task);
-        }
+    LowPhrasePrefix {
+        @Override public SearchTask parse(String line) { return parsePhrase(this, line); }
+        @Override public InputStream synt(SearchTask task) { return newPhrasePrefixStream(task); }
+    },
+    MedPhrasePrefix {
+        @Override public SearchTask parse(String line) { return parsePhrase(this, line); }
+        @Override public InputStream synt(SearchTask task) { return newPhrasePrefixStream(task); }
+    },
+    HighPhrasePrefix {
+        @Override public SearchTask parse(String line) { return parsePhrase(this, line); }
+        @Override public InputStream synt(SearchTask task) { return newPhrasePrefixStream(task); }
+    },
+
+    LowSloppyPhrase {
+        @Override public SearchTask parse(String line) { return parseSloppyPhrase(this, line); }
+        @Override public InputStream synt(SearchTask task) { return newSloppyPhraseStream(task); }
     },
     MedSloppyPhrase {
-        @Override
-        public SearchTask parse(String line) {
-            return parseSloppyPhrase(this, line);
-        }
-
-        @Override
-        public InputStream newInputStream(SearchTask task) {
-            return newSloppyPhraseStream(task);
-        }
+        @Override public SearchTask parse(String line) { return parseSloppyPhrase(this, line); }
+        @Override public InputStream synt(SearchTask task) { return newSloppyPhraseStream(task); }
     },
     HighSloppyPhrase {
-        @Override
-        public SearchTask parse(String line) {
-            return parseSloppyPhrase(this, line);
-        }
-
-        @Override
-        public InputStream newInputStream(SearchTask task) {
-            return newSloppyPhraseStream(task);
-        }
+        @Override public SearchTask parse(String line) { return parseSloppyPhrase(this, line); }
+        @Override public InputStream synt(SearchTask task) { return newSloppyPhraseStream(task); }
     },
-    Prefix3 {
-        @Override
-        public SearchTask parse(String line) {
-            return parsePrefix3(this, line);
-        }
 
-        @Override
-        public InputStream newInputStream(SearchTask task) {
-            return newPrefix3Stream(task);
-        }
+    Prefix3 {
+        @Override public SearchTask parse(String line) { return parsePrefix3(this, line); }
+        @Override public InputStream synt(SearchTask task) { return newPrefix3Stream(task); }
     };
 
 
     public abstract SearchTask parse(String line);
-    public abstract InputStream newInputStream(SearchTask task);
+    public abstract InputStream synt(SearchTask task);
 
 
     private static SearchTask parseSpanNear(SearchType type, String line) {
@@ -141,8 +87,20 @@ public enum SearchType {
 
 
     private static InputStream newPhraseStream(SearchTask task) {
-        // TODO Auto-generated method stub
-        return null;
+        return IOUtils.toInputStream(
+            "{\"query\":{\"match\":{\"_all\":{\"query\":\""
+          + task.getQuery()
+          + "\",\"type\":\"phrase\"}}}}"
+        );
+    }
+
+
+    private static InputStream newPhrasePrefixStream(SearchTask task) {
+        return IOUtils.toInputStream(
+            "{\"query\":{\"match_phrase_prefix\":{\"_all\":{\"query\":\""
+          + task.getQuery()
+          + "\",\"max_expansions\":2}}}}"
+        );
     }
 
 
@@ -152,8 +110,13 @@ public enum SearchType {
 
 
     private static InputStream newSloppyPhraseStream(SearchTask task) {
-        // TODO Auto-generated method stub
-        return null;
+        return IOUtils.toInputStream(
+            "{\"query\":{\"match_phrase\":{\"_all\":{\"query\":\""
+          + task.getQuery()
+          + "\",\"slop\":"
+          + task.getSlop()
+          + "}}}}"
+        );
     }
 
 
@@ -163,7 +126,11 @@ public enum SearchType {
 
 
     private static InputStream newPrefix3Stream(SearchTask task) {
-        return IOUtils.toInputStream("{\"query\":{\"prefix\":{\"_all\":\"" + task.getQuery() + "\"}}}");
+        return IOUtils.toInputStream(
+            "{\"query\":{\"prefix\":{\"_all\":\""
+          + task.getQuery()
+          + "\"}}}"
+      );
     }
 
 

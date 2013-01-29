@@ -53,8 +53,9 @@ enum TaskSource {
     private void loadTasks() throws IOException {
         for(final String line : Files.readAllLines(TaskStorage.source, Charset.defaultCharset())) {
             try {
-                final SearchTask task = SearchTask.parse(line);
-                map.put(task.getType(), task);
+                for(final SearchTask task : SearchTask.parse(line)) {
+                    map.put(task.getType(), task);
+                }
             }
             catch (final Exception e) {
                 // do nothing
