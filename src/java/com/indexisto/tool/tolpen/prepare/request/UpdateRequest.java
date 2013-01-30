@@ -21,15 +21,8 @@ public class UpdateRequest extends SelectableBase implements Request {
 
 
     @Override
-    public String write(PrepareContext context) throws IOException {
+    public RequestMeta write(PrepareContext context) throws IOException {
         throw new NotImplementedException();
-//      try (StorageOutput output = context.getNextRequestOutput()) {
-//          final URL url =
-//              new URL("http", Prepare.host, context.getIndexName() + "/" + Prepare.type)
-//              ;
-//          Util.writeRequest(url, output, FSStorage.newRequestInput(1));
-//          return output.getPath();
-//      }
     }
 
 

@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,15 +32,16 @@ public class SearchRequest extends SelectableBase implements Request {
 
 
     @Override
-    public String write(PrepareContext context) throws IOException {
+    public RequestMeta write(PrepareContext context) throws IOException {
         try (StorageOutput output = context.getNextRequestOutput()) {
             final SearchType searchType = searchTypes.next().get();
-            Util.writeMSearchRequest(output, FSStorage.newTaskInput(searchType, 1));
-            return StringUtils.join(new Object[] {
-                searchType,
-                output.getPath().toAbsolutePath(),
-                "/" + context.getIndexName() + "/" + Prepare.type + "/_msearch"
-            }, ",");
+            Util.writeMSearchRequest(context.getIndexName(), output, FSStorage.newTaskInput(searchType, 1));
+            final String uri =
+                "/" + context.getIndexName()
+              + "/" + Prepare.type
+              + "/_msearch"
+              ;
+            return new RequestMeta(searchType.toString(), output.getPath(), uri);
         }
     }
 

@@ -3,12 +3,16 @@ package com.indexisto.tool.tolpen.prepare.index;
 import static com.google.common.base.Preconditions.checkArgument;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
 import com.google.common.collect.AbstractIterator;
 import com.google.common.collect.Iterables;
-import com.indexisto.tool.tolpen.config.Config;
+import com.indexisto.tool.tolpen.config.Config.Prepare;
+import com.indexisto.tool.tolpen.prepare.request.CreateChildIndexRequest;
+import com.indexisto.tool.tolpen.prepare.request.CreateMultiIndexRequest;
+import com.indexisto.tool.tolpen.prepare.request.CreateSimpleIndexRequest;
 import com.indexisto.tool.tolpen.prepare.request.IndexRequest;
 import com.indexisto.tool.tolpen.prepare.request.Request;
 import com.indexisto.tool.tolpen.util.selectable.SelectableBase;
@@ -46,7 +50,8 @@ public class IndexType extends SelectableBase {
         return Iterables
             .limit(
                 Iterables.concat(
-                    new IndexChunker(docCount),
+                    new IndexCreator(),
+                    new IndexChunker(),
                     Selectables.newSelector(queries)
             ), ttl);
     }
@@ -57,14 +62,44 @@ public class IndexType extends SelectableBase {
     }
 
 
-    private static class IndexChunker implements Iterable<Request> {
+    public long getDocCount() {
+        return docCount;
+    }
+
+
+    private class IndexCreator implements Iterable<Request> {
+
+        @Override
+        public Iterator<Request> iterator() {
+            final IndexParams params = Prepare.calcIndexParams(IndexType.this);
+            final Collection<Request> result = new ArrayList<>();
+            if (params.isChildIndex()) {
+                while (!MultiIndexRepo.instance.tryAddChild(IndexType.this)) {
+                    MultiIndexRepo.instance.newMultiIndex();
+                    result.add(new CreateMultiIndexRequest(
+                        MultiIndexRepo.instance.getMultiIndexName(), params)
+                    );
+                }
+                result.add(new CreateChildIndexRequest(
+                    MultiIndexRepo.instance.getMultiIndexName())
+                );
+            }
+            else {
+                result.add(new CreateSimpleIndexRequest(params));
+            }
+            return result.iterator();
+        }
+    }
+
+
+    private class IndexChunker implements Iterable<Request> {
 
         private final long docChunk;
         private long docCount;
 
-        public IndexChunker(long docCount) {
-            this.docCount = docCount;
-            this.docChunk = Config.Prepare.getDocChunkLenght(docCount);
+        public IndexChunker() {
+            docCount = IndexType.this.docCount;
+            docChunk = Prepare.getDocChunkLenght(IndexType.this);
         }
 
 
@@ -77,10 +112,10 @@ public class IndexType extends SelectableBase {
                     if (docCount == 0) {
                         return endOfData();
                     }
-                    return newChunk();
+                    return newRequest();
                 }
 
-                private Request newChunk() {
+                private Request newRequest() {
                     final long currentChunk = Math.min(docCount, docChunk);
                     docCount -= currentChunk;
                     return new IndexRequest(currentChunk);
