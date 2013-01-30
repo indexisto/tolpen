@@ -100,10 +100,10 @@ public class Config {
 
 
         public static long getDocChunkLenght(IndexType indexType) {
-                 if (indexType.getDocCount() <    1000L) return 500L;
-            else if (indexType.getDocCount() <   10000L) return 1000L;
-            else if (indexType.getDocCount() <  100000L) return 5000L;
-            else if (indexType.getDocCount() < 1000000L) return 10000L;
+                 if (indexType.getDocCount() <    1001L) return 500L;
+            else if (indexType.getDocCount() <   10001L) return 1000L;
+            else if (indexType.getDocCount() <  100001L) return 5000L;
+            else if (indexType.getDocCount() < 1000001L) return 10000L;
             else                                         return 20000L;
         }
 
