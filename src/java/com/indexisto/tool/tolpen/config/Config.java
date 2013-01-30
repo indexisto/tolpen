@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import com.indexisto.tool.tolpen.prepare.index.IndexParams;
 import com.indexisto.tool.tolpen.prepare.index.IndexType;
 import com.indexisto.tool.tolpen.prepare.request.Request;
 import com.indexisto.tool.tolpen.prepare.request.SearchRequest;
@@ -58,11 +59,10 @@ public class Config {
         public static final String type = "doc";
         public static final Path storage = basePath.resolve("indecies");
 
+        public static final long multiIndexDocumentThreshold = 50000;
+
         private final static Collection<SelectableProvider<SearchType>> searchTypes = new ArrayList<>();
         static {
-//            searchTypes.add(new SelectableProvider<>(10, HighSpanNear));
-//            searchTypes.add(new SelectableProvider<>( 5, MedSpanNear));
-//            searchTypes.add(new SelectableProvider<>( 1, LowSpanNear));
             searchTypes.add(new SelectableProvider<>(10, HighPhrase));
             searchTypes.add(new SelectableProvider<>( 5, MedPhrase));
             searchTypes.add(new SelectableProvider<>( 1, LowPhrase));
@@ -99,12 +99,22 @@ public class Config {
         }
 
 
-        public static long getDocChunkLenght(long docCount) {
-                 if (docCount <    1000L) return 500L;
-            else if (docCount <   10000L) return 1000L;
-            else if (docCount <  100000L) return 5000L;
-            else if (docCount < 1000000L) return 10000L;
-            else                          return 20000L;
+        public static long getDocChunkLenght(IndexType indexType) {
+                 if (indexType.getDocCount() <    1000L) return 500L;
+            else if (indexType.getDocCount() <   10000L) return 1000L;
+            else if (indexType.getDocCount() <  100000L) return 5000L;
+            else if (indexType.getDocCount() < 1000000L) return 10000L;
+            else                                         return 20000L;
+        }
+
+
+        public static IndexParams calcIndexParams(IndexType indexType) {
+            if (indexType.getDocCount() < 1001) {
+                return IndexParams.newChildIndex(IndexParams.newIndex(3, 1));
+            }
+            else {
+                return IndexParams.newIndex(3, 1);
+            }
         }
     }
 }

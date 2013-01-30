@@ -249,10 +249,10 @@
       <hashTree/>
       <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="Deploy Indecies" enabled="true">
         <collectionProp name="ultimatethreadgroupdata">
-          <collectionProp name="-1348158443">
-            <stringProp name="1660">40</stringProp>
+          <collectionProp name="-2023043958">
+            <stringProp name="1567">10</stringProp>
             <stringProp name="48">0</stringProp>
-            <stringProp name="49586">200</stringProp>
+            <stringProp name="1691">50</stringProp>
             <stringProp name="1722">60</stringProp>
             <stringProp name="10">10</stringProp>
           </collectionProp>

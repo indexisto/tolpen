@@ -49,6 +49,16 @@ class Util {
     }
 
 
+
+    public static void writeRequest(
+        StorageOutput requestOutput,
+        String pattern,
+        Object... args
+    ) throws IOException {
+        IOUtils.write(String.format(pattern, args), requestOutput.getStream());
+    }
+
+
     private static String prepareBulkOp(String bulkOp, StorageInput input) {
         return String.format("{\"%s\":{\"_id\":\"%s\"}}", bulkOp, input.getPath());
     }
