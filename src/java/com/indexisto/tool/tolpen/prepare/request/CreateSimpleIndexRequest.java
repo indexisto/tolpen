@@ -4,8 +4,6 @@ import static com.google.common.base.Objects.toStringHelper;
 
 import java.io.IOException;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.indexisto.tool.tolpen.prepare.PrepareContext;
 import com.indexisto.tool.tolpen.prepare.index.IndexParams;
 import com.indexisto.tool.tolpen.storage.StorageOutput;
@@ -23,7 +21,7 @@ public class CreateSimpleIndexRequest extends SelectableBase implements Request 
 
 
     @Override
-    public String write(PrepareContext context) throws IOException {
+    public RequestMeta write(PrepareContext context) throws IOException {
         try (StorageOutput output = context.getNextRequestOutput()) {
             Util.writeRequest(
                 output,
@@ -31,11 +29,7 @@ public class CreateSimpleIndexRequest extends SelectableBase implements Request 
                 params.getShardNum(),
                 params.getReplicaNum()
             );
-            return StringUtils.join(new Object[] {
-                "createSimpleIndex",
-                output.getPath().toAbsolutePath(),
-                "/" + context.getIndexName()
-            }, ",");
+            return new RequestMeta("createSimpleIndex", output.getPath(), "/" + context.getIndexName());
         }
     }
 

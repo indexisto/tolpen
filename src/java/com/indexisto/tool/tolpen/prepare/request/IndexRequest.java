@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,17 +44,18 @@ public class IndexRequest extends SelectableBase implements Request {
 
 
     @Override
-    public String write(PrepareContext context) throws IOException {
+    public RequestMeta write(PrepareContext context) throws IOException {
         try (StorageOutput output = context.getNextRequestOutput()) {
             final Iterable<StorageInput> contentsInput = Iterables.transform(
                 FSStorage.newDocumentInput(docCount), new DocumentEnricher(context)
             );
             Util.writeBulkRequest("index", output, contentsInput);
-            return StringUtils.join(new Object[] {
-                "index",
-                output.getPath().toAbsolutePath(),
-                "/" + context.getIndexName() + "/" + Prepare.type + "/_bulk"
-            }, ",");
+            final String uri =
+                "/" + context.getIndexName()
+              + "/" + Prepare.type
+              + "/_bulk"
+              ;
+            return new RequestMeta("index", output.getPath(), uri);
         }
     }
 

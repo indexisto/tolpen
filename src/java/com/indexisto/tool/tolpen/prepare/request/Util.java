@@ -14,9 +14,9 @@ import com.indexisto.tool.tolpen.storage.StorageOutput;
 class Util {
 
     public static void writeBulkRequest(
-            String bulkOp,
-            StorageOutput requestOutput,
-            Iterable<StorageInput> contentsInput
+        String bulkOp,
+        StorageOutput requestOutput,
+        Iterable<StorageInput> contentsInput
     ) throws IOException {
         final OutputStream requestStream = requestOutput.getStream();
         for (final StorageInput input : contentsInput) {
@@ -31,13 +31,14 @@ class Util {
 
 
     public static void writeMSearchRequest(
-            StorageOutput requestOutput,
-            Iterable<InputStream> contentsInput
+        String indexName,
+        StorageOutput requestOutput,
+        Iterable<InputStream> contentsInput
     ) throws IOException {
         final OutputStream requestStream = requestOutput.getStream();
         for (final InputStream inputStream : contentsInput) {
             try {
-                IOUtils.write("{}", requestStream);
+                IOUtils.write("{\"index\":\"" + indexName + "\"}", requestStream);
                 IOUtils.write(HTTP_NEW_LINE.getBytes(), requestStream);
                 IOUtils.copy(inputStream, requestStream);
                 IOUtils.write(HTTP_NEW_LINE.getBytes(), requestStream);

@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import com.indexisto.tool.tolpen.config.Config.Prepare;
 import com.indexisto.tool.tolpen.prepare.index.IndexType;
 import com.indexisto.tool.tolpen.prepare.request.Request;
+import com.indexisto.tool.tolpen.prepare.request.RequestMeta;
 import com.indexisto.tool.tolpen.util.Util;
 import com.indexisto.tool.tolpen.util.selectable.Selectables;
 
@@ -32,7 +33,13 @@ public class Preparator {
 
 
     private void writeRequest(Request request) throws IOException {
-        Util.appendLineTo(context.getRequestsMetaPath(), request.write(context));
+        final RequestMeta meta = request.write(context);
+        Util.appendLineTo(
+            context.getRequestsMetaPath(),
+            meta.getName(),
+            meta.getPath().toString(),
+            meta.getUri()
+        );
     }
 
 

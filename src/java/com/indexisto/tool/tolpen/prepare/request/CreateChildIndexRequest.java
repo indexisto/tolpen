@@ -4,8 +4,6 @@ import static com.google.common.base.Objects.toStringHelper;
 
 import java.io.IOException;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.indexisto.tool.tolpen.prepare.PrepareContext;
 import com.indexisto.tool.tolpen.storage.StorageOutput;
 import com.indexisto.tool.tolpen.util.selectable.SelectableBase;
@@ -22,7 +20,7 @@ public class CreateChildIndexRequest extends SelectableBase implements Request {
 
 
     @Override
-    public String write(PrepareContext context) throws IOException {
+    public RequestMeta write(PrepareContext context) throws IOException {
         try (StorageOutput output = context.getNextRequestOutput()) {
             Util.writeRequest(
                 output,
@@ -35,11 +33,7 @@ public class CreateChildIndexRequest extends SelectableBase implements Request {
                 multiIndexName,
                 context.getIndexName()
             );
-            return StringUtils.join(new Object[] {
-                "createChildIndex",
-                output.getPath().toAbsolutePath(),
-                "/_aliases"
-            }, ",");
+            return new RequestMeta("createChildIndex", output.getPath(), "/_aliases");
         }
     }
 

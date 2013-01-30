@@ -27,12 +27,13 @@ import com.indexisto.tool.tolpen.util.selectable.SelectableProvider;
 
 public class Config {
 
-	public final static Path basePath = Paths.get("src/resources/data");
+	public final static Path basePath = Paths.get("src/resources");
+	public final static Path dataPath = Paths.get("src/resources/data");
 
     public static class DocumentStorage {
 
-        public static final Path source  = basePath.resolve("enwiki-20130102-pages-articles.xml").normalize();
-        public static final Path storage = basePath.resolve("docStorage").normalize();
+        public static final Path source  = dataPath.resolve("enwiki-20130102-pages-articles.xml").normalize();
+        public static final Path storage = dataPath.resolve("docStorage").normalize();
         public static final long limit   = 1000000L;
         public static final String extension = ".doc";
     }
@@ -40,14 +41,14 @@ public class Config {
 
     public static class RequestStorage {
 
-        public static final Path storage = basePath.resolve("reqStorage").normalize();
+        public static final Path storage = dataPath.resolve("reqStorage").normalize();
         public static final long limit   = 1000000L;
         public static final String extension = ".rec";
     }
 
 
     public static class TaskStorage {
-        public static final Path source = basePath.resolve("../highlight.tasks").normalize();
+        public static final Path source = basePath.resolve("highlight.tasks").normalize();
     }
 
 
@@ -57,7 +58,7 @@ public class Config {
         public static final int port = 9200;
 
         public static final String type = "doc";
-        public static final Path storage = basePath.resolve("indecies");
+        public static final Path storage = dataPath.resolve("indecies");
 
         public static final long multiIndexDocumentThreshold = 50000;
 
@@ -84,8 +85,8 @@ public class Config {
 //            new IndexType(3L, 1L, 1000, queries, 1000000L,  10L*60), // med
 //            new IndexType(4L, 1L, 1000, queries, 1000000L,   1L*60), // cold
             // medium size
-            new IndexType(10L, 10L, 1000, queries, 10000L, 100L*60), // hot
-            new IndexType(10L, 10L, 1000, queries, 10000L,  10L*60), // med
+            new IndexType( 6L, 10L, 1000, queries, 30000L,  20L*60), // hot
+            new IndexType( 8L, 10L, 1000, queries, 20000L,  10L*60), // med
             new IndexType(10L, 10L, 1000, queries, 10000L,   1L*60), // cold
             // small size
             new IndexType(20L, 30L, 1000, queries, 1000L, 100L*60), // hot
@@ -102,15 +103,18 @@ public class Config {
         public static long getDocChunkLenght(IndexType indexType) {
                  if (indexType.getDocCount() <    1001L) return 500L;
             else if (indexType.getDocCount() <   10001L) return 1000L;
-            else if (indexType.getDocCount() <  100001L) return 5000L;
-            else if (indexType.getDocCount() < 1000001L) return 10000L;
-            else                                         return 20000L;
+            else if (indexType.getDocCount() <  100001L) return 2000L;
+            else if (indexType.getDocCount() < 1000001L) return 4000L;
+            else                                         return 8000L;
         }
 
 
         public static IndexParams calcIndexParams(IndexType indexType) {
             if (indexType.getDocCount() < 1001) {
                 return IndexParams.newChildIndex(IndexParams.newIndex(3, 1));
+            }
+            else if (indexType.getDocCount() < 10001) {
+                return IndexParams.newIndex(2, 1);
             }
             else {
                 return IndexParams.newIndex(3, 1);
