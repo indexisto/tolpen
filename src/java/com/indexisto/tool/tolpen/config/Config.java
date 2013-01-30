@@ -1,5 +1,14 @@
 package com.indexisto.tool.tolpen.config;
 
+import static com.indexisto.tool.tolpen.prune.search.SearchType.HighPhrase;
+import static com.indexisto.tool.tolpen.prune.search.SearchType.HighPhrasePrefix;
+import static com.indexisto.tool.tolpen.prune.search.SearchType.HighSloppyPhrase;
+import static com.indexisto.tool.tolpen.prune.search.SearchType.LowPhrase;
+import static com.indexisto.tool.tolpen.prune.search.SearchType.LowPhrasePrefix;
+import static com.indexisto.tool.tolpen.prune.search.SearchType.LowSloppyPhrase;
+import static com.indexisto.tool.tolpen.prune.search.SearchType.MedPhrase;
+import static com.indexisto.tool.tolpen.prune.search.SearchType.MedPhrasePrefix;
+import static com.indexisto.tool.tolpen.prune.search.SearchType.MedSloppyPhrase;
 import static com.indexisto.tool.tolpen.prune.search.SearchType.Prefix3;
 
 import java.nio.file.Path;
@@ -54,12 +63,15 @@ public class Config {
 //            searchTypes.add(new SelectableProvider<>(10, HighSpanNear));
 //            searchTypes.add(new SelectableProvider<>( 5, MedSpanNear));
 //            searchTypes.add(new SelectableProvider<>( 1, LowSpanNear));
-//            searchTypes.add(new SelectableProvider<>(10, HighPhrase));
-//            searchTypes.add(new SelectableProvider<>( 5, MedPhrase));
-//            searchTypes.add(new SelectableProvider<>( 1, LowPhrase));
-//            searchTypes.add(new SelectableProvider<>(10, HighSloppyPhrase));
-//            searchTypes.add(new SelectableProvider<>( 5, MedSloppyPhrase));
-//            searchTypes.add(new SelectableProvider<>( 1, LowSloppyPhrase));
+            searchTypes.add(new SelectableProvider<>(10, HighPhrase));
+            searchTypes.add(new SelectableProvider<>( 5, MedPhrase));
+            searchTypes.add(new SelectableProvider<>( 1, LowPhrase));
+            searchTypes.add(new SelectableProvider<>(10, HighPhrasePrefix));
+            searchTypes.add(new SelectableProvider<>( 5, MedPhrasePrefix));
+            searchTypes.add(new SelectableProvider<>( 1, LowPhrasePrefix));
+            searchTypes.add(new SelectableProvider<>(10, HighSloppyPhrase));
+            searchTypes.add(new SelectableProvider<>( 5, MedSloppyPhrase));
+            searchTypes.add(new SelectableProvider<>( 1, LowSloppyPhrase));
             searchTypes.add(new SelectableProvider<>(10, Prefix3));
         }
         private final static Collection<Request> queries = Arrays.asList(new Request[] {
